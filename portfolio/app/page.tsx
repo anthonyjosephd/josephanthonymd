@@ -1,25 +1,19 @@
 import { Hero } from "@/components/sections/Hero";
-import { About } from "@/components/sections/About";
-import { Skills } from "@/components/sections/Skills";
-import { Projects } from "@/components/sections/Projects";
-import { Experience } from "@/components/sections/Experience";
-import { Services } from "@/components/sections/Services";
-import { Testimonials } from "@/components/sections/Testimonials";
-import { Contact } from "@/components/sections/Contact";
 import { Marquee } from "@/components/sections/Marquee";
+import { Works } from "@/components/sections/Works";
+import { ServicesSection } from "@/components/sections/ServicesSection";
+import { AboutSection } from "@/components/sections/AboutSection";
+import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
     <main>
       <Hero />
+      <Works />
       <Marquee />
-      <About />
-      <Skills />
-      <Projects />
-      <Experience />
-      <Services />
-      <Testimonials />
+      <ServicesSection />
+      <AboutSection />
       <Contact />
       <Footer />
     </main>

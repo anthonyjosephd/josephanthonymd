@@ -3,11 +3,9 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const links = [
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Work" },
-  { href: "#experience", label: "Experience" },
-  { href: "#services", label: "Services" },
+  { href: "#", label: "Home" },
+  { href: "#legacy", label: "Legacy" },
+  { href: "#works", label: "Works" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -16,7 +14,7 @@ export function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -24,56 +22,55 @@ export function Navigation() {
   return (
     <>
       <motion.nav
-        initial={{ y: -80, opacity: 0 }}
+        initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "py-3 bg-[rgba(8,8,8,0.92)] backdrop-blur-xl border-b border-[var(--color-border)]"
-            : "py-6"
+          scrolled ? "bg-[rgba(15,15,15,0.95)] backdrop-blur-xl" : ""
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-[1920px] mx-auto px-10 py-5 flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--color-accent)] to-[var(--color-accent-2)] flex items-center justify-center text-[var(--color-bg)] font-display font-bold text-sm">
-              J
+          <a href="#" className="flex items-center gap-2">
+            <div className="w-[42px] h-[44px] relative">
+              <img
+                src="https://framerusercontent.com/images/996c4rru2UztTiQ8gTDZB97Gb3Y.png"
+                alt="JAD"
+                className="w-full h-full object-contain"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
+              />
             </div>
-            <span className="font-mono text-xs tracking-widest text-[var(--color-text-dim)] uppercase group-hover:text-[var(--color-accent)] transition-colors">
-              Joseph Anthony
-            </span>
           </a>
 
-          {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop nav */}
+          <ul className="hidden md:flex items-center gap-8">
             {links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="font-mono text-xs tracking-widest uppercase text-[var(--color-text-dim)] hover:text-[var(--color-accent)] transition-colors relative group"
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-[var(--color-accent)] group-hover:w-full transition-all duration-300" />
-              </a>
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className="label text-white hover:text-[#7d7d7d] transition-colors duration-150 py-1"
+                >
+                  {link.label}
+                </a>
+              </li>
             ))}
+          </ul>
+
+          {/* Clock / time */}
+          <div className="hidden md:block label text-right">
+            <Time />
           </div>
 
-          {/* CTA */}
-          <a
-            href="#contact"
-            className="hidden md:flex items-center gap-2 px-4 py-2 border border-[var(--color-accent)] text-[var(--color-accent)] font-mono text-xs tracking-widest uppercase hover:bg-[var(--color-accent)] hover:text-[var(--color-bg)] transition-all duration-300"
-          >
-            Let's Talk
-          </a>
-
-          {/* Mobile menu button */}
+          {/* Mobile hamburger */}
           <button
-            className="md:hidden w-8 h-8 flex flex-col justify-center gap-1.5"
+            className="md:hidden flex flex-col gap-1.5"
             onClick={() => setMenuOpen(!menuOpen)}
           >
-            <span className={`block h-px bg-[var(--color-text)] transition-all ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`block h-px bg-[var(--color-text)] transition-all ${menuOpen ? "opacity-0" : ""}`} />
-            <span className={`block h-px bg-[var(--color-text)] transition-all ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+            <span className={`block w-6 h-px bg-white transition-all ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block w-6 h-px bg-white transition-all ${menuOpen ? "opacity-0" : ""}`} />
+            <span className={`block w-6 h-px bg-white transition-all ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
           </button>
         </div>
       </motion.nav>
@@ -82,20 +79,21 @@ export function Navigation() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-[var(--color-bg)] flex flex-col items-center justify-center gap-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 bg-[#0f0f0f] flex flex-col items-center justify-center gap-10"
           >
             {links.map((link, i) => (
               <motion.a
                 key={link.href}
                 href={link.href}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
+                transition={{ delay: i * 0.07 }}
                 onClick={() => setMenuOpen(false)}
-                className="font-display text-4xl text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
+                className="text-4xl font-black uppercase tracking-tight text-white"
+                style={{ fontFamily: "Lato, sans-serif" }}
               >
                 {link.label}
               </motion.a>
@@ -105,4 +103,18 @@ export function Navigation() {
       </AnimatePresence>
     </>
   );
+}
+
+function Time() {
+  const [time, setTime] = useState("");
+  useEffect(() => {
+    const update = () => {
+      const now = new Date();
+      setTime(now.toLocaleTimeString("en-US", { hour12: true, hour: "2-digit", minute: "2-digit", second: "2-digit" }));
+    };
+    update();
+    const id = setInterval(update, 1000);
+    return () => clearInterval(id);
+  }, []);
+  return <span>{time}</span>;
 }
